@@ -5,4 +5,5 @@
     <string name="appid">93635fe72bd1c0937079a9a1653fa2db</string>
     <string name="edit_message">Enter a City</string>
     <string name="button_send">Send</string>
+    <string name="search">Search</string>
 </resources>

@@ -2,7 +2,6 @@ package com.weather.weather;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +39,7 @@ public class SearchCity extends AppCompatActivity {
     }
     public void changeButtonCity() {
         Button button = (Button) findViewById(R.id.button);
-        button.getBackground().setAlpha(180);
+        button.getBackground().setAlpha(200);
     }
 
     public void sendMessage(View view) {

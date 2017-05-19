@@ -1,5 +1,6 @@
 package com.weather.weather;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.weather.weather.adapters.WeatherAdapter;
 import com.weather.weather.model.ImageCode;
@@ -69,6 +73,20 @@ public class MainActivity extends AppCompatActivity {
         mWeatherCollection = new ArrayList<>();
         mAdapter = new WeatherAdapter(mWeatherCollection, this);
         mWeatherRecyclerView.setAdapter(mAdapter);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        int menuItemThatWasSelected = item.getItemId();
+        if(menuItemThatWasSelected == R.id.action_search){
+            Context context = MainActivity.this;
+            String message = "Search clicked";
+            Toast.makeText(context,message, Toast.LENGTH_LONG).show();
+        }
+        return true;
     }
 
     public class FetchDataTask extends AsyncTask<Void, Void, Void> {
