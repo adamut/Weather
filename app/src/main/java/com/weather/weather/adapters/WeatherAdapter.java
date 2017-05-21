@@ -1,11 +1,13 @@
 package com.weather.weather.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -36,7 +38,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
     @Override
     public void onBindViewHolder(WeatherHolder holder, int position) {
         WeatherJSON weather = mData.get(position);
-
+        holder.myLayout.setBackgroundColor(Color.BLACK);
+        holder.myLayout.getBackground().setAlpha(180);
        // holder.setId(weather.getId());
         holder.setMax(weather.getMax());
         holder.setDay(weather.getDay());
@@ -48,7 +51,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
        // holder.setWindSpeed(weather.getSpeed());
         //Picasso il folosim pentru a incarca poza in ImageView
         Picasso.with(mActiviy).load(weather.getIdIcon()).into(holder.weatherImage);
-
     }
 
     @Override
@@ -70,11 +72,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         TextView weatherMain;
         TextView weatherDescription;
         TextView weatherWindSpeed;
+        LinearLayout myLayout;
+
 
 
         public WeatherHolder(View itemView) {
             super(itemView);
-
+            myLayout =(LinearLayout) itemView.findViewById(R.id.layout_recycler);
             weatherImage = (ImageView) itemView.findViewById(R.id.image);
            // weatherId = (TextView) itemView.findViewById(R.id.id);
             weatherMaxTemperature = (TextView) itemView.findViewById(R.id.maxTempDay);
@@ -85,8 +89,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
            // weatherMain = (TextView) itemView.findViewById(R.id.main);
             weatherDescription = (TextView) itemView.findViewById(R.id.description);
            // weatherWindSpeed = (TextView) itemView.findViewById(R.id.windSpeed);
-
-
         }
 
 
@@ -97,8 +99,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         public void setMax(String weatherMaxTemperature) {
             this.weatherMaxTemperature.setText(weatherMaxTemperature);
         }
-
-
 
         public void setDay(String weatherDayTemperature) {
             this.weatherDayTemperature.setText(weatherDayTemperature);

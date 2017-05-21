@@ -14,6 +14,9 @@ public class WeatherJSON {
     private String min;
     private String max;
     private int idIcon;
+    private int backgroundIcon;
+
+
 
     public WeatherJSON(){
 
@@ -105,6 +108,14 @@ public class WeatherJSON {
 
     public void setIdIcon(int idIcon) {
         this.idIcon = idIcon;
+    }
+
+    public int getBackgroundIcon() {
+        return backgroundIcon;
+    }
+
+    public void setBackgroundIcon(int backgroundIcon) {
+        this.backgroundIcon = backgroundIcon;
     }
 
     public WeatherJSON(String name, String speed, String pressure, String humidity, String mainWeather, String description, String id, String day, String min, String max, int idIcon) {

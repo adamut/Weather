@@ -9,11 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SearchCity extends AppCompatActivity {
 
-    public static final String EXTRA_MESSAGE = "merge acest rahat?";
+    public static String EXTRA_MESSAGE = "City inserted";
+    public String citySearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +53,44 @@ public class SearchCity extends AppCompatActivity {
     public void sendMessage(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+        citySearch = editText.getText().toString();
+
+        if(verifyCityName()) {
+            intent.putExtra(EXTRA_MESSAGE, citySearch);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "City not found! ", Toast.LENGTH_LONG).show();
+        }
       //  this.finish();
 
     }
+    public boolean verifyCityName(){
 
+        if (citySearch == null || citySearch.trim().isEmpty()) {
+            return false;
+        }
+
+        citySearch=citySearch.trim();
+        citySearch = citySearch.substring(0, 1).toUpperCase() + citySearch.substring(1).toLowerCase();
+        //Toast.makeText(this,citySearch, Toast.LENGTH_LONG).show();
+        Pattern stringPattern = Pattern.compile("[^A-Za-z -]");
+        Matcher matcher = stringPattern.matcher(citySearch);
+        boolean result = matcher.find();
+
+       citySearch= WordUtils.capitalizeFully(citySearch);
+        citySearch=WordUtils.capitalize(citySearch, new char[] { '-' });
+        citySearch=citySearch.replaceAll("^ +| +$|( )+", "$1");
+        //citySearch=citySearch.replaceAll("\\W","");
+        citySearch=citySearch.replaceAll("^-+$", "$1");
+
+        Toast.makeText(this, citySearch , Toast.LENGTH_LONG).show();
+        //if result = true that means the string contains special character
+        if (result == true) //return true if there's no special character in the string, false otherwise
+            return false;
+        else
+            return true;
+
+
+    }
 }

@@ -2,16 +2,18 @@ package com.weather.weather;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private WeatherAdapter mAdapter;
     private ArrayList<WeatherJSON> mWeatherCollection;
     final static String QUERY_PARAM = "q";
-    final static String APPID="appid";
+    final static String APPID = "appid";
     private String cityName;
-
+    private WeatherJSON todayValues;
 
 
     @Override
@@ -54,16 +56,32 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         cityName = intent.getStringExtra(com.weather.weather.SearchCity.EXTRA_MESSAGE);
         //selectare text view si plasare string
-        TextView textView = (TextView) findViewById(R.id.dateDay);
-        textView.setText(cityName);
+        //Toast.makeText(this, cityName, Toast.LENGTH_LONG).show();
 
-        changeBackgroundColor(R.color.colorAccent);
+        // changeBackgroundColor(R.color.colorAccent);
         init();
         new FetchDataTask().execute();
+        //setTodayWeather();
+
     }
-    private void changeBackgroundColor(int color){
-        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(MainActivity.this, color));
+
+    //private void changeBackgroundColor(int color) {
+    //  getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(MainActivity.this, color));
+    // }
+
+    public void changeLayoutToday() {
+        ConstraintLayout editLayoutToday = (ConstraintLayout) findViewById(R.id.layoutToday);
+        editLayoutToday.setBackgroundColor(Color.BLACK);
+        editLayoutToday.getBackground().setAlpha(180);
     }
+
+    public void changeRecyclerBackground() {
+        RecyclerView layoutCardView = (RecyclerView) findViewById(R.id.weather_recycler);
+        layoutCardView.setBackgroundColor(Color.BLACK);
+        layoutCardView.getBackground().setAlpha(180);
+
+    }
+
     private void init() {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -73,42 +91,55 @@ public class MainActivity extends AppCompatActivity {
         mWeatherCollection = new ArrayList<>();
         mAdapter = new WeatherAdapter(mWeatherCollection, this);
         mWeatherRecyclerView.setAdapter(mAdapter);
+        // changeRecyclerBackground();
+        todayValues = new WeatherJSON();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-    public boolean onOptionsItemSelected(MenuItem item){
+
+    public boolean onOptionsItemSelected(MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
-        if(menuItemThatWasSelected == R.id.action_search){
-            Context context = MainActivity.this;
-            String message = "Search clicked";
-            Toast.makeText(context,message, Toast.LENGTH_LONG).show();
+        //<!--TODO am de revizuit cum e scris un URI si cum sa fac cu geolocatia + de verificat daca linia 62-63 e ok -->
+
+        switch (menuItemThatWasSelected) {
+            case android.R.id.home: {
+                onBackPressed();
+                break;
+            }
+
+            case R.id.action_location: {
+                Context context = MainActivity.this;
+                String message = "Search clicked";
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+
         }
         return true;
     }
 
-    public class FetchDataTask extends AsyncTask<Void, Void, Void> {
+    public class FetchDataTask extends AsyncTask<Void, Void, WeatherJSON> {
 
         private String mWeatherString;
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected WeatherJSON doInBackground(Void... params) {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             Uri builtUri = Uri.parse(getString(R.string.weather_api1)).buildUpon()
                     .appendQueryParameter(QUERY_PARAM, cityName)
                     .appendQueryParameter(APPID, getString(R.string.appid))
                     .build();
-           // Uri builtUri = Uri.parse(getString(R.string.weather_api));
+            // Uri builtUri = Uri.parse(getString(R.string.weather_api));
             URL url;
             try {
 
                 url = new URL(builtUri.toString());
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
-               // urlConnection.setRequestProperty("appid", "93635fe72bd1c0937079a9a1653fa2db");
+                // urlConnection.setRequestProperty("appid", "93635fe72bd1c0937079a9a1653fa2db");
                 urlConnection.connect();
 
                 InputStream inputStream = urlConnection.getInputStream();
@@ -130,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mWeatherString = buffer.toString();
                 // JSONObject jsonObject = new JSONObject(mWeatherString);
-                //  Log.v("Response", jsonObject.toString());
+
                 //revenim aici
 
 
@@ -138,61 +169,89 @@ public class MainActivity extends AppCompatActivity {
 
                 String cod = jsonObj.getString("cod");
 
-                if(!cod.equals("404")) {
+                if (!cod.equals("404")) {
                     JSONObject city = jsonObj.getJSONObject("city");
                     String name = city.getString("name");
 
-                    JSONArray list = jsonObj.getJSONArray("list");
+                    if (cityName.equals(name) || name.contains(cityName)) {
+                        JSONArray list = jsonObj.getJSONArray("list");
 
-                    for (int i = 0; i < list.length(); i++) {
-                        JSONObject objList = list.getJSONObject(i);
-                        JSONObject temp = objList.getJSONObject("temp");
+                        for (int i = 0; i < list.length(); i++) {
+                            JSONObject objList = list.getJSONObject(i);
+                            JSONObject temp = objList.getJSONObject("temp");
 
-                        int day = (int) (temp.getDouble("day") - 273.16);
-                        String dayTemperature = String.valueOf(day);
+                            int day = (int) (temp.getDouble("day") - 273.16);
+                            String dayTemperature = String.valueOf(day);
 
-                        int min = (int) (temp.getDouble("min") - 273.16);
-                        String minTemperature = String.valueOf(min);
+                            int min = (int) (temp.getDouble("min") - 273.16);
+                            String minTemperature = String.valueOf(min);
 
-                        int max = (int) (temp.getDouble("max") - 273.16);
-                        String maxTemperature = String.valueOf(max);
+                            int max = (int) (temp.getDouble("max") - 273.16);
+                            String maxTemperature = String.valueOf(max);
 
 
-                        String pressure = String.valueOf(objList.getDouble("pressure"));
-                        String humidity = String.valueOf(objList.getDouble("humidity"));
+                            String pressure = String.valueOf(objList.getDouble("pressure"));
+                            String humidity = String.valueOf(objList.getDouble("humidity"));
 
-                        JSONArray weather = objList.getJSONArray("weather");
-                        JSONObject weatherInfo = weather.getJSONObject(0);
-                        String mainWeather = weatherInfo.getString("main");
-                        String description = weatherInfo.getString("description");
-                        String id = weatherInfo.getString("id");
-                        int idIcon = weatherInfo.getInt("id");
-                        String speed = String.valueOf(objList.getDouble("speed"));
+                            JSONArray weather = objList.getJSONArray("weather");
+                            JSONObject weatherInfo = weather.getJSONObject(0);
+                            String mainWeather = weatherInfo.getString("main");
+                            String description = weatherInfo.getString("description");
+                            String id = weatherInfo.getString("id");
+                            int idIcon = weatherInfo.getInt("id");
+                            int backgroundIcon = idIcon;
+                            String speed = String.valueOf(objList.getDouble("speed"));
 
-                        WeatherJSON weatherObj = new WeatherJSON();
+                            if (i != 0) {
+                                WeatherJSON weatherObj = new WeatherJSON();
+                                weatherObj.setName(name);
+                                weatherObj.setId(id);
+                                weatherObj.setDay(dayTemperature);
+                                weatherObj.setMin(minTemperature);
+                                weatherObj.setMax(maxTemperature);
+                                weatherObj.setPressure(pressure);
+                                weatherObj.setHumidity(humidity);
+                                weatherObj.setMainWeather(mainWeather);
+                                weatherObj.setDescription(description);
 
-                        weatherObj.setName(name);
-                        weatherObj.setId(id);
-                        weatherObj.setDay(dayTemperature);
-                        weatherObj.setMin(minTemperature);
-                        weatherObj.setMax(maxTemperature);
-                        weatherObj.setPressure(pressure);
-                        weatherObj.setHumidity(humidity);
-                        weatherObj.setMainWeather(mainWeather);
-                        weatherObj.setDescription(description);
+                                //cautam poza in clasa ImageCode si returnam valoarea imaginii
+                                ImageCode image = new ImageCode();
+                                idIcon = image.searchIconValue(idIcon);
+                                weatherObj.setIdIcon(idIcon);
 
-                        //cautam poza in clasa ImageCode si returnam valoarea imaginii
-                        ImageCode image = new ImageCode();
-                        idIcon = image.searchIconValue(idIcon);
-                        weatherObj.setIdIcon(idIcon);
+                                weatherObj.setSpeed(speed);
+                                mWeatherCollection.add(weatherObj);
+                            } else {
 
-                        weatherObj.setSpeed(speed);
-                        mWeatherCollection.add(weatherObj);
+                                // setTodayWeather(dayTemperature, maxTemperature, description, idIcon);
+                                todayValues.setName(name);
+                                todayValues.setMin(minTemperature);
+                                todayValues.setDay(dayTemperature);
+                                todayValues.setMax(maxTemperature);
+                                todayValues.setDescription(description);
+                                ImageCode image = new ImageCode();
+                                idIcon = image.searchIconValue(idIcon);
+                                backgroundIcon = image.searchBackgroundValue(backgroundIcon);
+                                todayValues.setIdIcon(idIcon);
+                                todayValues.setBackgroundIcon(backgroundIcon);
+                            }
+
+                        }
                     }
-                }
-                else
-                {
-
+                    else {
+                        //in case City name != inputCity, closing URL and reader connection, return null
+                        if (urlConnection != null) {
+                            urlConnection.disconnect();
+                            if (reader != null) {
+                                try {
+                                    reader.close();
+                                } catch (IOException e) {
+                                    Log.e("MainActivity", "Error closing stream", e);
+                                }
+                            }
+                            return null;
+                        }
+                    }
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -212,12 +271,66 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            return null;
+
+            //Closing URL and reader connection in case we want to see other cities
+            if (urlConnection != null)
+                urlConnection.disconnect();
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        Log.e("MainActivity", "Error closing stream", e);
+                    }
+                }
+            return todayValues;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(WeatherJSON obj) {
+
             mAdapter.notifyDataSetChanged();
+            if (obj != null && !obj.getName().equals("")) {
+                setTodayWeather();
+            }
+            else{
+                Intent intent = new Intent(MainActivity.this, SearchCity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity ( intent );
+
+            }
+
+
         }
+    }
+
+    public void setTodayWeather() {
+        changeLayoutToday();
+        TextView todayTemp = (TextView) findViewById(R.id.dayTemp);
+        String displayDay = todayValues.getDay() + " °";
+        todayTemp.setText(displayDay);
+
+        TextView todayMaxTemp = (TextView) findViewById(R.id.maxTempDay);
+        String displayMax = "High " + todayValues.getMax() + " ° ";
+        todayMaxTemp.setText(displayMax);
+
+        TextView todayMinTemp = (TextView) findViewById(R.id.minTempDay);
+        String displayMin = "Low " + todayValues.getMin() + " ° ";
+        todayMinTemp.setText(displayMin);
+
+        TextView todayDescription = (TextView) findViewById(R.id.mainDay);
+        todayDescription.setText(todayValues.getDescription());
+
+        ImageView dayImage = (ImageView) findViewById(R.id.imageDay);
+        dayImage.setImageResource(todayValues.getIdIcon());
+
+        TextView todayCity = (TextView) findViewById(R.id.todayCity);
+        todayCity.setText(todayValues.getName());
+
+        ImageView todayImage = (ImageView) findViewById(R.id.imageBackgroundMain);
+        //Picasso.with(MainActivity.this).load(todayValues.getBackgroundIcon()).into(todayImage);
+        todayImage.setImageResource(todayValues.getBackgroundIcon());
+        //todayImage.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.thuderstorm));
+
+
     }
 }
