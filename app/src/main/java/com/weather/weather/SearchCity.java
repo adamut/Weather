@@ -34,7 +34,6 @@ public class SearchCity extends AppCompatActivity {
         changeEditTextCity();
         changeButtonCity();
         changeImageCity();
-
     }
     public void changeImageCity(){
         ImageView image= (ImageView)findViewById(R.id.imageCity);
@@ -52,6 +51,7 @@ public class SearchCity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+        //take input from EditText and parse it to next Activity
         EditText editText = (EditText) findViewById(R.id.editText);
         citySearch = editText.getText().toString();
 
