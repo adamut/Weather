@@ -26,7 +26,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SearchCity" />
         </activity>
-        <activity android:name=".Credits"></activity>
+        <activity android:name=".ShowDetailedActivityInfo"
+            android:screenOrientation="portrait">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>
