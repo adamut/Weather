@@ -19,11 +19,11 @@ public class ecranPornire extends AppCompatActivity {
         Intent intent = new Intent(ecranPornire.this, SearchCity.class);
         startActivity(intent);
     }
-    /*
+
     public void toCredits(View view)
     {
         Intent intent = new Intent(ecranPornire.this, Credits.class);
         startActivity(intent);
     }
-    */
+
 }
