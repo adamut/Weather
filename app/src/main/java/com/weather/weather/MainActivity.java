@@ -172,8 +172,9 @@ public class MainActivity extends AppCompatActivity {
                 if (!cod.equals("404")) {
                     JSONObject city = jsonObj.getJSONObject("city");
                     String name = city.getString("name");
-
-                    if (cityName.equals(name) || name.contains(cityName)) {
+                    String[] parts = name.split("-");
+                    String nameToCompare = parts[0];
+                    if (cityName.equals(name) || nameToCompare.equals(cityName)) {
                         JSONArray list = jsonObj.getJSONArray("list");
 
                         for (int i = 0; i < list.length(); i++) {
@@ -234,6 +235,14 @@ public class MainActivity extends AppCompatActivity {
                                 backgroundIcon = image.searchBackgroundValue(backgroundIcon);
                                 todayValues.setIdIcon(idIcon);
                                 todayValues.setBackgroundIcon(backgroundIcon);
+                                todayValues.setPressure(pressure);
+                                todayValues.setHumidity(humidity);
+                                todayValues.setSpeed(speed);
+
+                                //pus acum
+                                todayValues.setId(id);
+
+
                             }
 
                         }
