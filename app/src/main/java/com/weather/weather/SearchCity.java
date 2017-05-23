@@ -54,6 +54,7 @@ public class SearchCity extends AppCompatActivity {
         //take input from EditText and parse it to next Activity
         EditText editText = (EditText) findViewById(R.id.editText);
         citySearch = editText.getText().toString();
+        editText.setText("");
 
         if(verifyCityName()) {
             intent.putExtra(EXTRA_MESSAGE, citySearch);
