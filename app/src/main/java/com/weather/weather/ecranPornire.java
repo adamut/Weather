@@ -25,5 +25,4 @@ public class ecranPornire extends AppCompatActivity {
         Intent intent = new Intent(ecranPornire.this, Credits.class);
         startActivity(intent);
     }
-
 }
