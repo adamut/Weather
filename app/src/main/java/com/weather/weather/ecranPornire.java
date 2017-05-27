@@ -13,16 +13,20 @@ public class ecranPornire extends AppCompatActivity {
         setContentView(R.layout.activity_ecran_pornire);
 
 
+
+
     }
     public void toSearchCity(View view)
     {
         Intent intent = new Intent(ecranPornire.this, SearchCity.class);
         startActivity(intent);
+        finish();//distrugem activitatea
     }
 
     public void toCredits(View view)
     {
         Intent intent = new Intent(ecranPornire.this, Credits.class);
         startActivity(intent);
+        finish();
     }
 }
