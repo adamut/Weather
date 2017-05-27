@@ -59,18 +59,22 @@ public class SearchCity extends AppCompatActivity {
         citySearch = editText.getText().toString();
         editText.setText("");
 
-        if(verifyCityName()) {
+        if(verifyCityName())
+        {
             intent.putExtra(EXTRA_MESSAGE, citySearch);
             startActivity(intent);
         }
-        else{
+        else
+        {
+            finish();
+            startActivity(getIntent());
             Toast.makeText(this, "City not found! ", Toast.LENGTH_LONG).show();
         }
       //  this.finish();
 
     }
-    public boolean verifyCityName(){
-
+    public boolean verifyCityName()
+    {
         if (citySearch == null || citySearch.trim().isEmpty()) {
             return false;
         }
