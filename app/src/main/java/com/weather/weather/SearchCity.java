@@ -60,11 +60,9 @@ public class SearchCity extends AppCompatActivity {
         editText.setText("");
 
         if(verifyCityName())
-        {   try {
+        {
             intent.putExtra(EXTRA_MESSAGE, citySearch);
             startActivity(intent);
-            }catch(Exception Ex){
-            Toast.makeText(this, "tiganie! ", Toast.LENGTH_LONG).show();}
         }
         else
         {
