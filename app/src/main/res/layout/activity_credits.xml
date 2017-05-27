@@ -85,13 +85,14 @@
 
         <Button
             android:id="@+id/button2"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-
             android:layout_marginRight="16dp"
-            android:background="#33ffff00"
+            android:background="@color/bg_color_2"
             android:onClick="toSearchCity"
             android:text="next"
             app:layout_constraintBottom_toBottomOf="parent"
