@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/imageViewToCredits"
         android:layout_width="95dp"
         android:layout_height="64dp"
         app:srcCompat="@drawable/a"
@@ -19,8 +19,8 @@
         app:layout_constraintRight_toLeftOf="@+id/button"
         android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="-18dp"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginBottom="-7dp"
+        app:layout_constraintHorizontal_bias="0.943"
         android:onClick="toCredits"
         />
 
@@ -31,18 +31,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:onClick="toSearchCity"
         android:text="next"
-        android:background="#33ffff00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="HardcodedText"
-        android:onClick="toSearchCity" />
+        tools:ignore="HardcodedText" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="130dp"
+        android:layout_height="150dp"
         android:background="#CC2e2e1f"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -79,6 +78,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:srcCompat="@drawable/logo"
             tools:ignore="ContentDescription" />
+
+
 
     </android.support.constraint.ConstraintLayout>
 

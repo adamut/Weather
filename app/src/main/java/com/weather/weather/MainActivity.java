@@ -1,12 +1,12 @@
 package com.weather.weather;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.weather.weather.adapters.WeatherAdapter;
 import com.weather.weather.model.ImageCode;
@@ -110,12 +109,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case R.id.action_location: {
-                Context context = MainActivity.this;
-                String message = "Search clicked";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            case R.id.action_search: {
+                onBackPressed();
+                break;
             }
 
+            case R.id.action_share: {
+                sharingData();
+                break;
+            }
+            case R.id.action_location: {
+                openLocationInMap();
+                break;
+            }
+            case R.id.action_settings:{
+                createSettingsIntent();
+            }
         }
         return true;
     }
@@ -246,8 +255,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         }
-                    }
-                    else {
+                    } else {
                         //in case City name != inputCity, closing URL and reader connection, return null
                         if (urlConnection != null) {
                             urlConnection.disconnect();
@@ -284,13 +292,13 @@ public class MainActivity extends AppCompatActivity {
             //Closing URL and reader connection in case we want to see other cities
             if (urlConnection != null)
                 urlConnection.disconnect();
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        Log.e("MainActivity", "Error closing stream", e);
-                    }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    Log.e("MainActivity", "Error closing stream", e);
                 }
+            }
             return todayValues;
         }
 
@@ -300,11 +308,10 @@ public class MainActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             if (obj != null && !obj.getName().equals("")) {
                 setTodayWeather();
-            }
-            else{
+            } else {
                 Intent intent = new Intent(MainActivity.this, SearchCity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity ( intent );
+                startActivity(intent);
 
             }
 
@@ -342,4 +349,36 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    private void openLocationInMap() {
+        String addressString = todayValues.getName() ;
+        Uri geoLocation = Uri.parse("geo:0,0?q=" + addressString);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } //else {
+        // Log.d(TAG, "Couldn't call " + geoLocation.toString()
+        //         + ", no receiving apps installed!");
+    }
+
+    private void sharingData(){
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText("Ana are mere")
+                .getIntent();
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(shareIntent);
+        }
+    }
+
+    private void createSettingsIntent(){
+        Intent intent = new Intent(this, UserSettings.class);
+        startActivity(intent);
+
+    }
 }
+

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,10 +43,14 @@ public class ShowDetailedActivityInfo extends AppCompatActivity {
         weatherDescription.setText(extrasCity.getString("description"));
         weatherWindSpeed.setText(extrasCity.getString("speed"));
         ImageCode image = new ImageCode();
-        weatherImage.setImageResource(image.searchBackgroundValue(extrasCity.getInt("id")));
-      //  int  idIcon= extrasCity.getInt("id");
-      //  idIcon = image.searchIconValue(idIcon);
-       detailedWeatherImage.setImageResource(image.searchIconValue(extrasCity.getInt("id")));
+
+        String test=extrasCity.getString("id");
+        int id = Integer.valueOf(test);
+        int idIcon= image.searchBackgroundValue(id);
+        //int idIcon=idBackground;
+        //Toast.makeText(this,idBackground,Toast.LENGTH_LONG).show();
+        weatherImage.setImageResource(image.searchBackgroundValue(id));
+       detailedWeatherImage.setImageResource(image.searchIconValue(id));
 
 
 
@@ -80,7 +85,7 @@ public class ShowDetailedActivityInfo extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
+*/
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
         //<!--TODO am de revizuit cum e scris un URI si cum sa fac cu geolocatia + de verificat daca linia 62-63 e ok -->
@@ -90,15 +95,8 @@ public class ShowDetailedActivityInfo extends AppCompatActivity {
                 onBackPressed();
                 break;
             }
-
-            case R.id.action_location: {
-                Context context = ShowDetailedActivityInfo.this;
-                String message = "Search clicked";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-            }
-
         }
         return true;
     }
-*/
+
 }
