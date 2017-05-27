@@ -1,11 +1,13 @@
 package com.weather.weather;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ecranPornire extends AppCompatActivity {
 
@@ -14,7 +16,9 @@ public class ecranPornire extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         //hide Blue ActionBar from ecranPornire
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         setContentView(R.layout.activity_ecran_pornire);
 
         changeButtonStart();
