@@ -14,7 +14,9 @@ public class Credits extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         //hide Blue ActionBar from Credits
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         setContentView(R.layout.activity_credits);
         changeButtonCredits();
     }
@@ -27,5 +29,6 @@ public class Credits extends AppCompatActivity {
     {
         Intent intent = new Intent(Credits.this, SearchCity.class);
         startActivity(intent);
+        finish();//destroy this activity
     }
 }
