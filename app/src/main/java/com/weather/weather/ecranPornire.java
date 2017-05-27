@@ -13,8 +13,6 @@ public class ecranPornire extends AppCompatActivity {
         setContentView(R.layout.activity_ecran_pornire);
 
 
-
-
     }
     public void toSearchCity(View view)
     {
@@ -27,6 +25,6 @@ public class ecranPornire extends AppCompatActivity {
     {
         Intent intent = new Intent(ecranPornire.this, Credits.class);
         startActivity(intent);
-        finish();
+        finish();//distrugem activitatea
     }
 }
