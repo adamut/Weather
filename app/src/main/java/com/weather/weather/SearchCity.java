@@ -60,9 +60,11 @@ public class SearchCity extends AppCompatActivity {
         editText.setText("");
 
         if(verifyCityName())
-        {
+        {   try {
             intent.putExtra(EXTRA_MESSAGE, citySearch);
             startActivity(intent);
+            }catch(Exception Ex){finish();
+            startActivity(getIntent());}
         }
         else
         {
@@ -96,7 +98,6 @@ public class SearchCity extends AppCompatActivity {
         if (result == true) //return true if there's no special character in the string, false otherwise
             return false;
         return true;
-
 
     }
     boolean doubleBackToExitPressedOnce = false;
