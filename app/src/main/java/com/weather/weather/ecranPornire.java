@@ -29,7 +29,7 @@ public class ecranPornire extends AppCompatActivity {
     {
         Intent intent = new Intent(ecranPornire.this, SearchCity.class);
         startActivity(intent);
-        finish();//distrugem activitatea
+        finish();//destroy this activity
     }
 
     public void toCredits(View view)
