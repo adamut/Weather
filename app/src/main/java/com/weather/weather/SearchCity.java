@@ -52,7 +52,8 @@ public class SearchCity extends AppCompatActivity {
         button.getBackground().setAlpha(200);
     }
 
-    public void sendMessage(View view) {
+    public void sendMessage(View view)
+    {
         Intent intent = new Intent(this, MainActivity.class);
         //take input from EditText and parse it to next Activity
         EditText editText = (EditText) findViewById(R.id.editText);
@@ -66,7 +67,6 @@ public class SearchCity extends AppCompatActivity {
         }
         else
         {
-
             Toast.makeText(this, "City not found! ", Toast.LENGTH_LONG).show();
         }
       //  this.finish();
@@ -101,7 +101,8 @@ public class SearchCity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
