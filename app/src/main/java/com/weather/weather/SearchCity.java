@@ -66,8 +66,7 @@ public class SearchCity extends AppCompatActivity {
         }
         else
         {
-            finish();
-            startActivity(getIntent());
+
             Toast.makeText(this, "City not found! ", Toast.LENGTH_LONG).show();
         }
       //  this.finish();
