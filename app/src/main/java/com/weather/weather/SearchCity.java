@@ -3,6 +3,7 @@ package com.weather.weather;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,7 +29,9 @@ public class SearchCity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         //hide Blue ActionBar from SearchCity
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         setContentView(R.layout.search_city);
 
         changeEditTextCity();
@@ -89,9 +92,28 @@ public class SearchCity extends AppCompatActivity {
         //if result = true that means the string contains special character
         if (result == true) //return true if there's no special character in the string, false otherwise
             return false;
-        else
-            return true;
+        return true;
 
 
+    }
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
