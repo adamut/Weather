@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-/**
- * Created by Cosmin-Marian on 5/24/2017.
- */
 
 public class UserSettings extends AppCompatActivity  {
 

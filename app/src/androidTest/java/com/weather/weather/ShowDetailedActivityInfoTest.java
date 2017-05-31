@@ -8,24 +8,24 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 
-public class ShowDetailedActivityInfoTest {
+public class ShowDetailedActivityInfoTest
+{
     @Rule
     public ActivityTestRule<ShowDetailedActivityInfo> mActivityTestRule = new ActivityTestRule<>(ShowDetailedActivityInfo.class);
     private ShowDetailedActivityInfo mActivity= null;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         mActivity= mActivityTestRule.getActivity();
     }
     @Test
 
     public void testLaunch()
     {
-        View view=mActivity.findViewById(R.id.detailedCityName);
+        View view=mActivity.findViewById(R.id.backgroundDetail);
         assertNotNull(view);
 
     }

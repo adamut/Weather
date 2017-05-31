@@ -21,7 +21,7 @@ public class Credits extends AppCompatActivity {
         changeButtonCredits();
     }
     public void changeButtonCredits() {
-        Button button = (Button) findViewById(R.id.button);
+        Button button = (Button) findViewById(R.id.buttonCredits);
         button.getBackground().setAlpha(200);
     }
 

@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.instabug.library.Instabug;
+import com.instabug.library.invocation.InstabugInvocationEvent;
+
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.regex.Matcher;
@@ -34,7 +37,9 @@ public class SearchCity extends AppCompatActivity {
             actionBar.hide();
         }
         setContentView(R.layout.search_city);
-
+        new Instabug.Builder(getApplication(), "6d9cf5bf8b38973f91d4d4476c9339b1")
+                .setInvocationEvent(InstabugInvocationEvent.SHAKE)
+                .build();
         changeEditTextCity();
         changeButtonCity();
         changeImageCity();
@@ -44,7 +49,7 @@ public class SearchCity extends AppCompatActivity {
         image.setImageResource(R.drawable.sunny);
     }
     public void changeEditTextCity() {
-        EditText editText = (EditText) findViewById(R.id.editText);
+        EditText editText = (EditText) findViewById(R.id.editTextSearch);
         editText.setBackgroundColor(Color.WHITE);
         editText.getBackground().setAlpha(170);
     }
@@ -57,7 +62,7 @@ public class SearchCity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, MainActivity.class);
         //take input from EditText and parse it to next Activity
-        EditText editText = (EditText) findViewById(R.id.editText);
+        EditText editText = (EditText) findViewById(R.id.editTextSearch);
         citySearch = editText.getText().toString();
         editText.setText("");
 

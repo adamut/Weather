@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.instabug.library.Instabug;
+import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.weather.weather.adapters.WeatherAdapter;
 import com.weather.weather.model.ImageCode;
 import com.weather.weather.model.WeatherJSON;
@@ -49,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        new Instabug.Builder(getApplication(), "6d9cf5bf8b38973f91d4d4476c9339b1")
+                .setInvocationEvent(InstabugInvocationEvent.SHAKE)
+                .build();
         //Intent de la SearchCity
         Intent intent = getIntent();
         cityName = intent.getStringExtra(com.weather.weather.SearchCity.EXTRA_MESSAGE);

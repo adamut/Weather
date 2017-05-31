@@ -12,19 +12,19 @@ import android.widget.TextView;
 import com.weather.weather.model.ImageCode;
 
 public class ShowDetailedActivityInfo extends AppCompatActivity {
-    Bundle extrasCity;
-    ImageView weatherImage;
-    ImageView detailedWeatherImage;
+    private Bundle extrasCity;
+    private ImageView weatherImage;
+    private ImageView detailedWeatherImage;
     //TextView weatherId;
-    TextView weatherMaxTemperature;
-    TextView weatherDayTemperature;
-    TextView weatherName;
-    TextView weatherPressure;
-    TextView weatherHumidity;
+    private TextView weatherMaxTemperature;
+    private TextView weatherDayTemperature;
+    private TextView weatherName;
+    private TextView weatherPressure;
+    private TextView weatherHumidity;
     //TextView weatherMain;
-    TextView weatherDescription;
-    TextView weatherWindSpeed;
-    TextView weatherMinTemperature;
+    private TextView weatherDescription;
+    private TextView weatherWindSpeed;
+    private TextView weatherMinTemperature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,25 +32,25 @@ public class ShowDetailedActivityInfo extends AppCompatActivity {
         setContentView(R.layout.show_detailed_activity);
         // Get the Intent that started this activity and extract the string
         changeLayoutDetailed();
-        extrasCity = getIntent().getExtras();
+        setExtrasCity(getIntent().getExtras());
         findAttributesId();
-        weatherMinTemperature.setText("Min: "+ extrasCity.getString("minTemperature"));
-        weatherMaxTemperature.setText("Max: "+ extrasCity.getString("maxTemperature"));
-        weatherDayTemperature.setText("Day: "+extrasCity.getString("dayTemperature"));
-        weatherName.setText(extrasCity.getString("name"));
-        weatherPressure.setText("Pressure: "+extrasCity.getString("pressure"));
-        weatherHumidity.setText("Humidity: "+extrasCity.getString("humidity"));
-        weatherDescription.setText(extrasCity.getString("description"));
-        weatherWindSpeed.setText(extrasCity.getString("speed"));
+        getWeatherMinTemperature().setText("Min: "+ getExtrasCity().getString("minTemperature"));
+        getWeatherMaxTemperature().setText("Max: "+ getExtrasCity().getString("maxTemperature"));
+        getWeatherDayTemperature().setText("Day: "+ getExtrasCity().getString("dayTemperature"));
+        getWeatherName().setText(getExtrasCity().getString("name"));
+        getWeatherPressure().setText("Pressure: "+ getExtrasCity().getString("pressure"));
+        getWeatherHumidity().setText("Humidity: "+ getExtrasCity().getString("humidity"));
+        getWeatherDescription().setText(getExtrasCity().getString("description"));
+        getWeatherWindSpeed().setText(getExtrasCity().getString("speed"));
         ImageCode image = new ImageCode();
 
-        String test=extrasCity.getString("id");
+        String test= getExtrasCity().getString("id");
         int id = Integer.valueOf(test);
         int idIcon= image.searchBackgroundValue(id);
         //int idIcon=idBackground;
         //Toast.makeText(this,idBackground,Toast.LENGTH_LONG).show();
-        weatherImage.setImageResource(image.searchBackgroundValue(id));
-       detailedWeatherImage.setImageResource(image.searchIconValue(id));
+        getWeatherImage().setImageResource(image.searchBackgroundValue(id));
+       getDetailedWeatherImage().setImageResource(image.searchIconValue(id));
 
 
 
@@ -63,16 +63,16 @@ public class ShowDetailedActivityInfo extends AppCompatActivity {
     }
 
     public void findAttributesId() {
-        weatherMinTemperature = (TextView) findViewById(R.id.detailedMin);
-        weatherMaxTemperature = (TextView) findViewById(R.id.detailedMax);
-        weatherDayTemperature = (TextView) findViewById(R.id.detailedDay);
-        weatherName = (TextView) findViewById(R.id.detailedCityName);
-        weatherPressure = (TextView) findViewById(R.id.detailedPressure);
-        weatherHumidity = (TextView) findViewById(R.id.detailedHumidity);
-        weatherDescription = (TextView) findViewById(R.id.detailedDescription);
-        weatherWindSpeed = (TextView) findViewById(R.id.detailedSpeed);
-        weatherImage = (ImageView) findViewById(R.id.backgroundDetail);
-        detailedWeatherImage = (ImageView) findViewById(R.id.detailedImage);
+        setWeatherMinTemperature((TextView) findViewById(R.id.detailedMin));
+        setWeatherMaxTemperature((TextView) findViewById(R.id.detailedMax));
+        setWeatherDayTemperature((TextView) findViewById(R.id.detailedDay));
+        setWeatherName((TextView) findViewById(R.id.detailedCityName));
+        setWeatherPressure((TextView) findViewById(R.id.detailedPressure));
+        setWeatherHumidity((TextView) findViewById(R.id.detailedHumidity));
+        setWeatherDescription((TextView) findViewById(R.id.detailedDescription));
+        setWeatherWindSpeed((TextView) findViewById(R.id.detailedSpeed));
+        setWeatherImage((ImageView) findViewById(R.id.backgroundDetail));
+        setDetailedWeatherImage((ImageView) findViewById(R.id.detailedImage));
     }
 
     // Intent intent = getIntent();
@@ -99,4 +99,91 @@ public class ShowDetailedActivityInfo extends AppCompatActivity {
         return true;
     }
 
+    public Bundle getExtrasCity() {
+        return extrasCity;
+    }
+
+    public void setExtrasCity(Bundle extrasCity) {
+        this.extrasCity = extrasCity;
+    }
+
+    public ImageView getWeatherImage() {
+        return weatherImage;
+    }
+
+    public void setWeatherImage(ImageView weatherImage) {
+        this.weatherImage = weatherImage;
+    }
+
+    public ImageView getDetailedWeatherImage() {
+        return detailedWeatherImage;
+    }
+
+    public void setDetailedWeatherImage(ImageView detailedWeatherImage) {
+        this.detailedWeatherImage = detailedWeatherImage;
+    }
+
+    public TextView getWeatherMaxTemperature() {
+        return weatherMaxTemperature;
+    }
+
+    public void setWeatherMaxTemperature(TextView weatherMaxTemperature) {
+        this.weatherMaxTemperature = weatherMaxTemperature;
+    }
+
+    public TextView getWeatherDayTemperature() {
+        return weatherDayTemperature;
+    }
+
+    public void setWeatherDayTemperature(TextView weatherDayTemperature) {
+        this.weatherDayTemperature = weatherDayTemperature;
+    }
+
+    public TextView getWeatherName() {
+        return weatherName;
+    }
+
+    public void setWeatherName(TextView weatherName) {
+        this.weatherName = weatherName;
+    }
+
+    public TextView getWeatherPressure() {
+        return weatherPressure;
+    }
+
+    public void setWeatherPressure(TextView weatherPressure) {
+        this.weatherPressure = weatherPressure;
+    }
+
+    public TextView getWeatherHumidity() {
+        return weatherHumidity;
+    }
+
+    public void setWeatherHumidity(TextView weatherHumidity) {
+        this.weatherHumidity = weatherHumidity;
+    }
+
+    public TextView getWeatherDescription() {
+        return weatherDescription;
+    }
+
+    public void setWeatherDescription(TextView weatherDescription) {
+        this.weatherDescription = weatherDescription;
+    }
+
+    public TextView getWeatherWindSpeed() {
+        return weatherWindSpeed;
+    }
+
+    public void setWeatherWindSpeed(TextView weatherWindSpeed) {
+        this.weatherWindSpeed = weatherWindSpeed;
+    }
+
+    public TextView getWeatherMinTemperature() {
+        return weatherMinTemperature;
+    }
+
+    public void setWeatherMinTemperature(TextView weatherMinTemperature) {
+        this.weatherMinTemperature = weatherMinTemperature;
+    }
 }
