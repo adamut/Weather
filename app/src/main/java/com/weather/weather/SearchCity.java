@@ -24,6 +24,7 @@ public class SearchCity extends AppCompatActivity {
     public String citySearch;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
