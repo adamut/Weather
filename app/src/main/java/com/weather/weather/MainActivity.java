@@ -33,7 +33,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -187,7 +191,14 @@ public class MainActivity extends AppCompatActivity {
                     String[] parts = name.split("-");
                     String nameToCompare = parts[0];
                     if (cityName.equals(name) || nameToCompare.equals(cityName)) {
+
                         JSONArray list = jsonObj.getJSONArray("list");
+                        Date date = new Date();
+                        SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM");
+                        String zi =dayFormat.format(date);
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(dayFormat.parse(zi));
+
 
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject objList = list.getJSONObject(i);
@@ -217,7 +228,10 @@ public class MainActivity extends AppCompatActivity {
 
                             if (i != 0) {
                                 WeatherJSON weatherObj = new WeatherJSON();
-                                weatherObj.setName(name);
+
+                                c.add(Calendar.DATE, 1);  // number of days to add
+                                zi = dayFormat.format(c.getTime());
+                                weatherObj.setName(zi);
                                 weatherObj.setId(id);
                                 weatherObj.setDay(dayTemperature);
                                 weatherObj.setMin(minTemperature);
@@ -237,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
 
                                 // setTodayWeather(dayTemperature, maxTemperature, description, idIcon);
+
                                 todayValues.setName(name);
                                 todayValues.setMin(minTemperature);
                                 todayValues.setDay(dayTemperature);
@@ -278,6 +293,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             } finally {
                 if (urlConnection != null) {
@@ -325,15 +342,15 @@ public class MainActivity extends AppCompatActivity {
     public void setTodayWeather() {
         changeLayoutToday();
         TextView todayTemp = (TextView) findViewById(R.id.dayTemp);
-        String displayDay = todayValues.getDay() + " °";
+        String displayDay = todayValues.getDay() + " °C";
         todayTemp.setText(displayDay);
 
         TextView todayMaxTemp = (TextView) findViewById(R.id.maxTempDay);
-        String displayMax = "High " + todayValues.getMax() + " ° ";
+        String displayMax = "High " + todayValues.getMax() + " °C";
         todayMaxTemp.setText(displayMax);
 
         TextView todayMinTemp = (TextView) findViewById(R.id.minTempDay);
-        String displayMin = "Low " + todayValues.getMin() + " ° ";
+        String displayMin = "Low " + todayValues.getMin() + " °C";
         todayMinTemp.setText(displayMin);
 
         TextView todayDescription = (TextView) findViewById(R.id.mainDay);
@@ -369,9 +386,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sharingData(){
+        String shareWeather = "Today's weather in "+ todayValues.getName()+" is "+ todayValues.getDay() + "°C";
         Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
-                .setText("Ana are mere")
+                .setText(shareWeather)
                 .getIntent();
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(shareIntent);

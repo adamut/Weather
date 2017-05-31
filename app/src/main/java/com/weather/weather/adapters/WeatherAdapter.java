@@ -45,9 +45,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         WeatherJSON weather = mData.get(position);
         holder.myLayout.setBackgroundColor(Color.BLACK);
         holder.myLayout.getBackground().setAlpha(180);
-        holder.setMin(weather.getMin());
-        holder.setMax(weather.getMax());
-        holder.setDay(weather.getDay());
+        holder.setMin(weather.getMin()+ " °C");
+        holder.setMax(weather.getMax()+ " °C");
+        holder.setDay(weather.getDay()+ " °C");
         holder.setName(weather.getName());
         holder.setDescription(weather.getDescription());
         holder.setPressure(weather.getPressure());
