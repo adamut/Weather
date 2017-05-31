@@ -10,28 +10,28 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ecranPornireTest
-{
+
+public class ShowDetailedActivityInfoTest {
     @Rule
-    public ActivityTestRule<ecranPornire> mActivityTestRule = new ActivityTestRule<>(ecranPornire.class);
-    private ecranPornire mActivity= null;
+    public ActivityTestRule<ShowDetailedActivityInfo> mActivityTestRule = new ActivityTestRule<>(ShowDetailedActivityInfo.class);
+    private ShowDetailedActivityInfo mActivity= null;
 
     @Before
     public void setUp() throws Exception
     {
-     mActivity= mActivityTestRule.getActivity();
+        mActivity= mActivityTestRule.getActivity();
     }
     @Test
 
     public void testLaunch()
     {
-        View view=mActivity.findViewById(R.id.imageViewToCredits);
+        View view=mActivity.findViewById(R.id.detailedCityName);
         assertNotNull(view);
 
     }
     @After
     public void tearDown() throws Exception {
-    mActivity=null;
+        mActivity=null;
     }
 
 }

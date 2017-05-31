@@ -36,7 +36,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private RecyclerView mWeatherRecyclerView;
     private WeatherAdapter mAdapter;
     private ArrayList<WeatherJSON> mWeatherCollection;
