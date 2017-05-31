@@ -25,7 +25,7 @@ public class ShowDetailedActivityInfoTest {
 
     public void testLaunch()
     {
-        View view=mActivity.findViewById(R.id.imageViewToCredits);
+        View view=mActivity.findViewById(R.id.detailedCityName);
         assertNotNull(view);
 
     }
