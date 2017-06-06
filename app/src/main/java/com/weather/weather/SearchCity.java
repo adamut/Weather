@@ -44,7 +44,7 @@ public class SearchCity extends AppCompatActivity {
         image.setImageResource(R.drawable.sunny);
     }
     public void changeEditTextCity() {
-        EditText editText = (EditText) findViewById(R.id.editText);
+        EditText editText = (EditText) findViewById(R.id.editTextSearch);
         editText.setBackgroundColor(Color.WHITE);
         editText.getBackground().setAlpha(170);
     }
@@ -57,7 +57,7 @@ public class SearchCity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, MainActivity.class);
         //take input from EditText and parse it to next Activity
-        EditText editText = (EditText) findViewById(R.id.editText);
+        EditText editText = (EditText) findViewById(R.id.editTextSearch);
         citySearch = editText.getText().toString();
         editText.setText("");
 
